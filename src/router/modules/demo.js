@@ -9,4 +9,9 @@ export default [
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
   },
+  {
+    path: '/import',
+    name: 'import',
+    component: () => import('@/views/ImportView.vue'),
+  },
 ];

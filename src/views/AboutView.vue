@@ -1,6 +1,27 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+
+    <div class="form">
+      <el-form>
+        <el-card>
+          <!-- shop select -->
+          <el-form-item></el-form-item>
+          <!-- sku select -->
+          <el-form-item> </el-form-item>
+          <!--  product fieldset-->
+          <el-card>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+            <el-form-item> </el-form-item>
+          </el-card>
+        </el-card>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -10,8 +31,7 @@ import User from '@/api/user';
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      form: [],
     };
   },
   computed: {},
