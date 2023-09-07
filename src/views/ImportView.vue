@@ -44,7 +44,8 @@ export default {
       >
         <el-card shadow="never">
           <div class="form">
-            <el-form :inline="true">
+            <!-- <el-form :inline="true"> -->
+            <el-form label-position="top">
               <div v-for="item in $store.state.salesImport.data" :key="item.index" class="fieldsets">
                 <SalesImportFormFieldsets :index="item.index" :data="item"></SalesImportFormFieldsets>
               </div>

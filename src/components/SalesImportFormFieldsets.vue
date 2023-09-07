@@ -6,11 +6,12 @@ export default {
   },
   data() {
     return {
-      shop_options: [
-        { label: 'shop1', value: 'shop1_db_id' },
-        { label: 'shop2', value: 'shop2_db_id' },
-        { label: 'shop3', value: 'shop3_db_id' },
-        { label: 'shop4', value: 'shop4_db_id' },
+      shop_options: [],
+      sku_options: [
+        { label: 'sku1', value: 'sku1_db_id' },
+        { label: 'sku2', value: 'sku2_db_id' },
+        { label: 'sku3', value: 'sku3_db_id' },
+        { label: 'sku4', value: 'sku4_db_id' },
       ],
     };
   },
@@ -22,12 +23,18 @@ export default {
     },
   },
   created() {
-    // do something at init!
+    // axios fetch user target shops options from remote
+    fetchShopOptions().then((res) => {
+      this.shop_options = res.data;
+    });
   },
   methods: {
     shopSlectCallback() {
       // fetch sku data from remote
       console.log('shopSelect');
+    },
+    pullShopOptions() {
+      console.log('blue call');
     },
     skuSlectCallback() {
       // fetch product online desc detail from remote
@@ -60,49 +67,57 @@ export default {
 </script>
 
 <template>
-  <div class="fieldsets-item">
-    <!-- <p>{{ fieldsetState.index }}</p> -->
+  <div class="fieldset-inner">
+    <div class="fieldsets-item">
+      <!-- <p>{{ fieldsetState.index }}</p> -->
 
-    <el-form-item label="Shop">
-      <el-select v-model="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSlectCallback">
-        <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </el-form-item>
-    <!-- sku select -->
-    <el-form-item label="SKU">
-      <el-select v-model="fieldsetState.sku" filterable placeholder="Please Select Sku" @change="skuSlectCallback">
-        <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </el-form-item>
-    <!--  product stock location-->
-    <el-form-item label="location">
-      <el-select
-        :value="fieldsetState.location"
-        filterable
-        placeholder="Please Select Location"
-        @change="(value) => fieldUpdate({ location: value })"
-      >
-        <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </el-form-item>
+      <el-form-item label="Shop">
+        <el-select
+          v-model="fieldsetState.sid"
+          filterable
+          :remote-method="remoteMethod"
+          placeholder="Please Select Shop"
+          @change="shopSlectCallback"
+        >
+          <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <!-- sku select -->
+      <el-form-item label="SKU">
+        <el-select v-model="fieldsetState.sku" filterable placeholder="Please Select Sku" @change="skuSlectCallback">
+          <el-option v-for="item in sku_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+        </el-select>
+      </el-form-item>
+      <!--  product stock location-->
+      <el-form-item label="Warehouse">
+        <el-select
+          :value="fieldsetState.location"
+          filterable
+          placeholder="Please Select Location"
+          @change="(value) => fieldUpdate({ location: value })"
+        >
+          <el-option v-for="item in sku_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+        </el-select>
+      </el-form-item>
 
-    <el-form-item label="Unit Price">
-      <el-input
-        :value="fieldsetState.unit_price"
-        placeholder="please input price"
-        @input="(value) => fieldUpdate({ unit_price: value })"
-      ></el-input>
-    </el-form-item>
+      <el-form-item label="Unit Price">
+        <el-input
+          :value="fieldsetState.unit_price"
+          placeholder="please input price"
+          @input="(value) => fieldUpdate({ unit_price: value })"
+        ></el-input>
+      </el-form-item>
 
-    <el-form-item label="QTY">
-      <el-input
-        :value="fieldsetState.qty"
-        placeholder="please input quantity"
-        @input="(value) => fieldUpdate({ qty: value })"
-      ></el-input>
-    </el-form-item>
+      <el-form-item label="QTY">
+        <el-input
+          :value="fieldsetState.qty"
+          placeholder="please input quantity"
+          @input="(value) => fieldUpdate({ qty: value })"
+        ></el-input>
+      </el-form-item>
 
-    <!-- 
+      <!-- 
         <el-card shadow="never">
           <el-form-item>
             <div class="product-image">
@@ -125,13 +140,32 @@ export default {
             <div class="localtion"><span>CaiNiao Bonded</span></div>
           </el-form-item>
         </el-card> -->
-    <span class="remove-button">
-      <i class="el-icon-remove-outline" @click="removeCurrentFiledSet(index)"></i>
-    </span>
+      <span class="remove-button">
+        <i class="el-icon-remove-outline" @click="removeCurrentFiledSet(index)"></i>
+      </span>
+    </div>
+
+    <div v-if="fieldsetState.unit_price && fieldsetState.qty" class="summary">
+      Sub Total Amount - ¥ {{ fieldsetState.unit_price * fieldsetState.qty }}
+    </div>
   </div>
 </template>
 
 <style lang="less">
+.fieldsets-item {
+  width: 100%;
+  display: flex;
+}
+
+.summary {
+  display: block;
+  clear: both;
+}
+
+.el-form-item {
+  margin-right: 1rem;
+}
+
 .remove-button {
   font-size: 16px;
   padding: 2px;
