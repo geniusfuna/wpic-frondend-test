@@ -25,8 +25,8 @@ import HelloWorld from './components/HelloWorld.vue';
 #app {
   width: 100%;
   height: 100vh;
-  max-width: 1519px;
-  max-height: 1150px;
+  max-width: 2379px;
+  max-height: 1232px;
   background-image: url(./assets/images/import-bg.png);
   background-repeat: no-repeat;
 }

@@ -37,8 +37,17 @@ export default {
       // fetch product stock from remote
       console.log('storageSelect');
     },
-    removeCurrentFiledSet() {
-      console.log('remove self');
+    removeCurrentFiledSet(index) {
+      if (this.$store.state.salesImport.data.length === 1) {
+        this.$message({
+          message:
+            "Sorry, your can't move the last import item. Please consider to close this form to cancel the import work.",
+          type: 'warning',
+        });
+        return;
+      }
+      console.log('removeCurrentFiledSet', index);
+      this.$store.commit('salesImport/removeCurrent', index);
     },
     // @attention commit() 方法调用，如果是模块化方式，这需要携带模块化名称，形如 "模块名/state_name"
     // @attention commit() 方法中只可以传递一个参数，如果有多个参数，需要传递对象或数据，然后在 mutations 方法中做解包处理
@@ -51,8 +60,8 @@ export default {
 </script>
 
 <template>
-  <div class="fieldsets">
-    <p>{{ fieldsetState.index }}</p>
+  <div class="fieldsets-item">
+    <!-- <p>{{ fieldsetState.index }}</p> -->
 
     <el-form-item label="Shop">
       <el-select v-model="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSlectCallback">
@@ -116,8 +125,16 @@ export default {
             <div class="localtion"><span>CaiNiao Bonded</span></div>
           </el-form-item>
         </el-card> -->
-    <i class="el-icon-remove-outline"></i>
+    <span class="remove-button">
+      <i class="el-icon-remove-outline" @click="removeCurrentFiledSet(index)"></i>
+    </span>
   </div>
 </template>
 
-<style lang="less"></style>
+<style lang="less">
+.remove-button {
+  font-size: 16px;
+  padding: 2px;
+  cursor: pointer;
+}
+</style>

@@ -36,19 +36,31 @@ export default {
     </div>
 
     <div class="import">
-      <el-card shadow="never">
-        <div class="form">
-          <el-form :inline="true">
-            <div v-for="item in $store.state.salesImport.data" :key="item.index">
-              <SalesImportFormFieldsets :index="item.index" :data="item"></SalesImportFormFieldsets>
-            </div>
+      <el-dialog
+        title="Import offline orders"
+        :visible.sync="salesImportModalVisibility"
+        :custom-class="'importModal'"
+        :width="'80%'"
+      >
+        <el-card shadow="never">
+          <div class="form">
+            <el-form :inline="true">
+              <div v-for="item in $store.state.salesImport.data" :key="item.index" class="fieldsets">
+                <SalesImportFormFieldsets :index="item.index" :data="item"></SalesImportFormFieldsets>
+              </div>
 
-            <div class="add-new">
-              <i class="el-icon-circle-plus-outline" @click="addNewFieldset"></i>
-            </div>
-          </el-form>
-        </div>
-      </el-card>
+              <div class="add-new">
+                <i class="el-icon-circle-plus-outline" @click="addNewFieldset"></i>
+              </div>
+            </el-form>
+          </div>
+        </el-card>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">Submit</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -57,18 +69,41 @@ export default {
 .import-button {
   cursor: pointer;
   position: absolute;
-  top: 370px;
+  top: 900px;
   right: 90px;
-  font-size: 18px;
-  padding: 2px 8px;
+  font-size: 16px;
+  padding: 4px 18px;
   background-color: white;
   border: 1px solid #cfd7e0;
-  border-radius: 50%;
+  border-radius: 4px;
 
   &:hover {
     background-color: #f3f9ea;
     border-color: #daeec1;
     color: #85c531;
+  }
+
+  i {
+    color: #4f5b7e;
+  }
+}
+
+.importModal {
+  .el-dialog__header {
+    // padding-bottom: 10px;
+    // border: 1px solid #dbdbdb;
+    text-align: center;
+    background-color: #f4f6fe;
+  }
+
+  .fieldsets {
+    border-top: 1px solid #ccc;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+
+    &:first-child {
+      border-top: none;
+    }
   }
 }
 </style>
