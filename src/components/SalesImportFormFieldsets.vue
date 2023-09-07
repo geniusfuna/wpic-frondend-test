@@ -77,18 +77,6 @@ export default {
       </el-select>
     </el-form-item>
 
-    <!--  product stock location-->
-    <!-- <el-form-item label="location">
-      <el-select
-        v-model="fieldsetState.location"
-        filterable
-        placeholder="Please Select Location"
-        @change="storageSlectCallback"
-      >
-        <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-      </el-select>
-    </el-form-item> -->
-
     <el-form-item label="Unit Price">
       <el-input
         :value="fieldsetState.unit_price"

@@ -4,7 +4,7 @@ import HelloWorld from './components/HelloWorld.vue';
 
 <template>
   <div id="app">
-    <header>
+    <!-- <header>
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
       <div class="wrapper">
@@ -15,17 +15,26 @@ import HelloWorld from './components/HelloWorld.vue';
           <router-link to="/import">Import</router-link>
         </nav>
       </div>
-    </header>
+    </header> -->
 
     <router-view />
   </div>
 </template>
 
 <style scoped>
+#app {
+  width: 100%;
+  height: 100vh;
+  max-width: 1519px;
+  max-height: 1150px;
+  background-image: url(./assets/images/import-bg.png);
+  background-repeat: no-repeat;
+}
+/* 
 header {
   max-height: 100vh;
   line-height: 1.5;
-}
+} */
 
 .logo {
   display: block;
