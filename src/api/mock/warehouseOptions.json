@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "msg": "success",
+  "data": [
+    {
+      "label": "wh location A",
+      "value": "0be93cd3-0271-44d3-bb41-3372cfb866f6"
+    },
+    {
+      "label": "wh location B",
+      "value": "c70a4b30-0ae1-48da-ad26-4b1cbc45b2c8"
+    },
+    {
+      "label": "wh location C",
+      "value": "3ab45fbe-00b2-463e-95a6-897c30861cac"
+    },
+    {
+      "label": "wh location D",
+      "value": "4b916fb5-86a3-40c7-843b-691ffbbf7ffc"
+    }
+  ]
+}

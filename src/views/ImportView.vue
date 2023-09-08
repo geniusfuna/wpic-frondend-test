@@ -51,7 +51,9 @@ export default {
               </div>
 
               <div class="add-new">
-                <i class="el-icon-circle-plus-outline" @click="addNewFieldset"></i>
+                <el-tooltip class="item" effect="dark" content="Add another record" placement="top">
+                  <i class="el-icon-circle-plus-outline" @click="addNewFieldset"></i>
+                </el-tooltip>
               </div>
             </el-form>
           </div>
@@ -98,7 +100,7 @@ export default {
   }
 
   .fieldsets {
-    border-top: 1px solid #ccc;
+    border-top: 1px dashed #ccc;
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
 
@@ -106,5 +108,10 @@ export default {
       border-top: none;
     }
   }
+}
+
+.add-new {
+  cursor: pointer;
+  text-align: center;
 }
 </style>

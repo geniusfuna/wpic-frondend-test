@@ -9,12 +9,10 @@ export default {
   data() {
     return {
       shop_options: [],
-      sku_options: [
-        { label: 'sku1', value: 'sku1_db_id' },
-        { label: 'sku2', value: 'sku2_db_id' },
-        { label: 'sku3', value: 'sku3_db_id' },
-        { label: 'sku4', value: 'sku4_db_id' },
-      ],
+      sku_options: [],
+      sku_select_loading: false,
+      warehouse_options: [],
+      warehouse_select_loading: false,
     };
   },
   computed: {
@@ -22,6 +20,10 @@ export default {
       get() {
         return this.$store.state.salesImport.data[this.index];
       },
+    },
+
+    sku_placeholder: () => {
+      return this.sku_select_loading ? 'loading ...' : 'Please Select Sku';
     },
   },
   created() {
@@ -36,13 +38,23 @@ export default {
     shopSlectCallback() {
       // fetch sku data from remote
       console.log('shopSelect');
-    },
-    pullShopOptions() {
-      console.log('blue call');
+
+      this.sku_select_loading = true;
+
+      Shop.getSkuOptions(1).then((res) => {
+        console.log(res);
+        this.sku_select_loading = false;
+        this.sku_options = res.data;
+      });
     },
     skuSlectCallback() {
-      // fetch product online desc detail from remote
-      console.log('shopSelect');
+      this.warehouse_select_loading = true;
+
+      Shop.getWarehouseOptions(1).then((res) => {
+        console.log(res);
+        this.warehouse_select_loading = false;
+        this.warehouse_options = res.data;
+      });
     },
     storageSlectCallback() {
       // fetch product stock from remote
@@ -76,20 +88,20 @@ export default {
       <!-- <p>{{ fieldsetState.index }}</p> -->
 
       <el-form-item label="Shop">
-        <el-select
-          v-model="fieldsetState.sid"
-          filterable
-          :remote-method="remoteMethod"
-          placeholder="Please Select Shop"
-          @change="shopSlectCallback"
-        >
+        <el-select v-model="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSlectCallback">
           <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <!-- sku select -->
       <el-form-item label="SKU">
-        <el-select v-model="fieldsetState.sku" filterable placeholder="Please Select Sku" @change="skuSlectCallback">
+        <!-- <el-select v-model="fieldsetState.sku" filterable placeholder="sku_placeholder" @change="skuSlectCallback"> -->
+        <el-select
+          v-model="fieldsetState.sku"
+          filterable
+          :placeholder="sku_select_loading ? 'loading ...' : 'Please Select Sku'"
+          @change="skuSlectCallback"
+        >
           <el-option v-for="item in sku_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </el-form-item>
@@ -98,10 +110,11 @@ export default {
         <el-select
           :value="fieldsetState.location"
           filterable
-          placeholder="Please Select Location"
+          :placeholder="warehouse_select_loading ? 'loading ...' : 'Please Select Warehouse'"
           @change="(value) => fieldUpdate({ location: value })"
         >
-          <el-option v-for="item in sku_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          <el-option v-for="item in warehouse_options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
 
@@ -144,9 +157,16 @@ export default {
             <div class="localtion"><span>CaiNiao Bonded</span></div>
           </el-form-item>
         </el-card> -->
+
+      <el-form-item label="OP">
+        <el-tooltip class="item" effect="dark" content="Remove this record" placement="top">
+          <i class="el-icon-remove-outline remove-button" @click="removeCurrentFiledSet(index)"></i>
+        </el-tooltip>
+      </el-form-item>
+      <!-- 
       <span class="remove-button">
         <i class="el-icon-remove-outline" @click="removeCurrentFiledSet(index)"></i>
-      </span>
+      </span> -->
     </div>
 
     <div v-if="fieldsetState.unit_price && fieldsetState.qty" class="summary">
@@ -164,6 +184,8 @@ export default {
 .summary {
   display: block;
   clear: both;
+  text-align: right;
+  margin-right: 3rem;
 }
 
 .el-form-item {

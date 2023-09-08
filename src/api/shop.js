@@ -1,6 +1,16 @@
 import { get } from '@/utils/request';
 
 import shopOptions from './mock/shopOptions';
+import skuOptions from './mock/skuOptions';
+import warehouseOptions from './mock/warehouseOptions';
+
+const fetch = (mockData, time) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockData);
+    }, time);
+  });
+};
 
 export default class Shop {
   /**
@@ -15,6 +25,7 @@ export default class Shop {
    *
    * }
    */
+
   static async getShopOptions(uid) {
     // return get('/shop-options', {
     //   uid,
@@ -22,14 +33,26 @@ export default class Shop {
 
     // construct the a promise response
 
-    const fetch = (mockData, time) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(mockData);
-        }, time);
-      });
-    };
-
     return fetch(shopOptions, 1000);
+  }
+
+  static async getSkuOptions(shop_id) {
+    // return get('/shop-options', {
+    //   uid,
+    // });
+
+    // construct the a promise response
+
+    return fetch(skuOptions, 1000);
+  }
+
+  static async getWarehouseOptions(sku_id) {
+    // return get('/shop-options', {
+    //   uid,
+    // });
+
+    // construct the a promise response
+
+    return fetch(warehouseOptions, 1000);
   }
 }
