@@ -37,7 +37,7 @@ export default class Shop {
   }
 
   static async getSkuOptions(shop_id) {
-    // return get('/shop-options', {
+    // return get('/sku-options', {
     //   uid,
     // });
 
@@ -47,7 +47,7 @@ export default class Shop {
   }
 
   static async getWarehouseOptions(sku_id) {
-    // return get('/shop-options', {
+    // return get('/warehouse-options', {
     //   uid,
     // });
 

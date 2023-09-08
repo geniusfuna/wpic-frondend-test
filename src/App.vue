@@ -1,22 +1,7 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue';
-</script>
+<script setup></script>
 
 <template>
   <div id="app">
-    <!-- <header>
-      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-      <div class="wrapper">
-
-        <nav>
-          <router-link to="/">Home</router-link>
-          <router-link to="/about">About</router-link>
-          <router-link to="/import">Import</router-link>
-        </nav>
-      </div>
-    </header> -->
-
     <router-view />
   </div>
 </template>
@@ -30,12 +15,6 @@ import HelloWorld from './components/HelloWorld.vue';
   background-image: url(./assets/images/import-bg.png);
   background-repeat: no-repeat;
 }
-/* 
-header {
-  max-height: 100vh;
-  line-height: 1.5;
-} */
-
 .logo {
   display: block;
   margin: 0 auto 2rem;

@@ -27,9 +27,9 @@ export default {
 
 <template>
   <div class="section">
-    <p style="background-color: white; display: block; padding: 20px">
+    <!-- <p style="background-color: white; display: block; padding: 20px">
       salesImportModalVisibility: <span style="margin-left: 20px; color: red">{{ salesImportModalVisibility }}</span>
-    </p>
+    </p> -->
 
     <div class="import-button" @click="swicthImportModal">
       <i class="el-icon-upload2"></i>
@@ -93,8 +93,6 @@ export default {
 
 .importModal {
   .el-dialog__header {
-    // padding-bottom: 10px;
-    // border: 1px solid #dbdbdb;
     text-align: center;
     background-color: #f4f6fe;
   }
