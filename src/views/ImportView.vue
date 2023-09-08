@@ -30,10 +30,11 @@ export default {
     <!-- <p style="background-color: white; display: block; padding: 20px">
       salesImportModalVisibility: <span style="margin-left: 20px; color: red">{{ salesImportModalVisibility }}</span>
     </p> -->
-
-    <div class="import-button" @click="swicthImportModal">
-      <i class="el-icon-upload2"></i>
-    </div>
+    <el-tooltip class="item" effect="dark" content="Import offline orders" placement="top">
+      <div class="import-button" @click="swicthImportModal">
+        <i class="el-icon-upload2"></i>
+      </div>
+    </el-tooltip>
 
     <div class="import">
       <el-dialog
@@ -72,7 +73,7 @@ export default {
 .import-button {
   cursor: pointer;
   position: absolute;
-  top: 900px;
+  top: 260px;
   right: 90px;
   font-size: 16px;
   padding: 4px 18px;
