@@ -130,7 +130,7 @@ export default {
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="OP">
+      <el-form-item class="op-item" label="OP">
         <el-tooltip class="item" effect="dark" content="Remove this record" placement="top">
           <i class="el-icon-remove-outline remove-button" @click="removeCurrentFiledSet(index)"></i>
         </el-tooltip>
@@ -158,11 +158,16 @@ export default {
 
 .el-form-item {
   margin-right: 1rem;
+  flex-grow: 1;
 }
 
 .remove-button {
   font-size: 16px;
   padding: 2px;
   cursor: pointer;
+}
+
+.op-item {
+  text-align: center;
 }
 </style>
