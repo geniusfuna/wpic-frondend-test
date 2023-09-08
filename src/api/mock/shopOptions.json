@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "label": "shopA",
+      "value": "e74fb84e-917c-415d-9d3a-b4f94917bdb3"
+    },
+    {
+      "label": "shopB",
+      "value": "f60ceea8-557b-45cc-87a7-1b5efe25369b"
+    },
+    {
+      "label": "shopC",
+      "value": "49f03445-82b7-4552-888a-ed391fd08f25"
+    },
+    {
+      "label": "shopD",
+      "value": "77dbabfd-49b1-46b1-9658-e9c06e6de3b3"
+    }
+  ]
+}

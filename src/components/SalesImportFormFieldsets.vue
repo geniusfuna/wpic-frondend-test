@@ -1,4 +1,6 @@
 <script>
+import Shop from '@/api/shop';
+
 export default {
   name: 'SalesImportFormFieldsets',
   props: {
@@ -24,7 +26,9 @@ export default {
   },
   created() {
     // axios fetch user target shops options from remote
-    fetchShopOptions().then((res) => {
+
+    Shop.getShopOptions(10).then((res) => {
+      console.log(res);
       this.shop_options = res.data;
     });
   },
