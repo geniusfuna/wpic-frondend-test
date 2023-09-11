@@ -22,17 +22,19 @@ const mutations = {
     console.log('removeCurrent', state.data);
   },
   updateFieldset(state, { index, value }) {
+    console.log('12', { index, value });
+
     Object.assign(state.data[index], value);
   },
 };
 
 const actions = {
-  addNew({ commit }) {
-    commit('addNew');
-  },
-  updateFieldset({ commit }) {
-    commit('updateFieldset');
-  },
+  // addNew({ commit }) {
+  //   commit('addNew');
+  // },
+  // updateFieldset({ commit }) {
+  //   commit('updateFieldset');
+  // },
 };
 
 export default {

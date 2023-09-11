@@ -28,17 +28,18 @@ export default {
   },
   created() {
     // axios fetch user target shops options from remote
-
     Shop.getShopOptions(10).then((res) => {
-      console.log(res);
       this.shop_options = res.data;
     });
   },
   methods: {
-    shopSlectCallback() {
+    shopSelectCallback(val) {
       // fetch sku data from remote
-      console.log('shopSelect');
-
+      const commit_data = {
+        index: this.index,
+        value: { sid: val, sku: null },
+      };
+      this.$store.commit('salesImport/updateFieldset', commit_data);
       this.sku_select_loading = true;
 
       Shop.getSkuOptions(1).then((res) => {
@@ -47,8 +48,15 @@ export default {
         this.sku_options = res.data;
       });
     },
-    skuSlectCallback() {
+    skuSlectCallback(val) {
       this.warehouse_select_loading = true;
+
+      const commit_data = {
+        index: this.index,
+        value: { sku: val, location: null },
+      };
+
+      this.$store.commit('salesImport/updateFieldset', commit_data);
 
       Shop.getWarehouseOptions(1).then((res) => {
         console.log(res);
@@ -56,8 +64,15 @@ export default {
         this.warehouse_options = res.data;
       });
     },
-    storageSlectCallback() {
-      // fetch product stock from remote
+    storageSlectCallback(val) {
+      const commit_data = {
+        index: this.index,
+        value: { location: val },
+      };
+
+      this.$store.commit('salesImport/updateFieldset', commit_data);
+
+      // fetch product stock from remote and build the modal for check compare
       console.log('storageSelect');
     },
     removeCurrentFiledSet(index) {
@@ -84,7 +99,7 @@ export default {
   <div class="fieldset-inner">
     <div class="fieldsets-item">
       <el-form-item label="Shop">
-        <el-select v-model="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSlectCallback">
+        <el-select :value="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSelectCallback">
           <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
@@ -93,7 +108,7 @@ export default {
       <el-form-item label="SKU">
         <!-- <el-select v-model="fieldsetState.sku" filterable placeholder="sku_placeholder" @change="skuSlectCallback"> -->
         <el-select
-          v-model="fieldsetState.sku"
+          :value="fieldsetState.sku"
           filterable
           :placeholder="sku_select_loading ? 'loading ...' : 'Please Select Sku'"
           @change="skuSlectCallback"
