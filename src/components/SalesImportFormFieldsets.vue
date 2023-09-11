@@ -18,7 +18,7 @@ export default {
   computed: {
     fieldsetState: {
       get() {
-        return this.$store.state.salesImport.data[this.index];
+        return this.$store.state.salesImport.data.find((el) => el.index === this.index);
       },
     },
 
@@ -84,7 +84,6 @@ export default {
         });
         return;
       }
-      console.log('removeCurrentFiledSet', index);
       this.$store.commit('salesImport/removeCurrent', index);
     },
 
@@ -106,7 +105,6 @@ export default {
       </el-form-item>
       <!-- sku select -->
       <el-form-item label="SKU">
-        <!-- <el-select v-model="fieldsetState.sku" filterable placeholder="sku_placeholder" @change="skuSlectCallback"> -->
         <el-select
           :value="fieldsetState.sku"
           filterable

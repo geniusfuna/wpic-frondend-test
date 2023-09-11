@@ -17,9 +17,10 @@ const mutations = {
     state.data.push({ index: state.index, ...initFieldState });
   },
   removeCurrent(state, index) {
-    console.log('removeCurrent', index);
-    state.data.splice(index, 1);
-    console.log('removeCurrent', state.data);
+    const rm_key = state.data.findIndex((el) => el.index === index);
+    if (rm_key !== -1) {
+      state.data.splice(rm_key, 1);
+    }
   },
   updateFieldset(state, { index, value }) {
     console.log('12', { index, value });
