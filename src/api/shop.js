@@ -3,6 +3,7 @@ import { get } from '@/utils/request';
 import shopOptions from './mock/shopOptions';
 import skuOptions from './mock/skuOptions';
 import warehouseOptions from './mock/warehouseOptions';
+import productData from './mock/productsData';
 
 const fetch = (mockData, time) => {
   return new Promise((resolve) => {
@@ -54,5 +55,11 @@ export default class Shop {
     // construct the a promise response
 
     return fetch(warehouseOptions, 1000);
+  }
+
+  static async getProductData(sku) {
+    // construct the a promise response
+
+    return fetch(productData, 1000);
   }
 }

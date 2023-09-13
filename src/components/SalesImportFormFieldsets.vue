@@ -13,6 +13,7 @@ export default {
       sku_select_loading: false,
       warehouse_options: [],
       warehouse_select_loading: false,
+      product: null,
     };
   },
   computed: {
@@ -58,6 +59,13 @@ export default {
 
       this.$store.commit('salesImport/updateFieldset', commit_data);
 
+      Shop.getProductData(1).then((res) => {
+        console.log('pd', res);
+        if (res.code === 0) {
+          this.product = res.data[val];
+        }
+      });
+
       Shop.getWarehouseOptions(1).then((res) => {
         console.log(res);
         this.warehouse_select_loading = false;
@@ -97,29 +105,46 @@ export default {
 <template>
   <div class="fieldset-inner">
     <div class="fieldsets-item">
-      <el-form-item label="Shop">
-        <el-select :value="fieldsetState.sid" filterable placeholder="Please Select Shop" @change="shopSelectCallback">
+      <el-form-item label="Shop" class="shop-item">
+        <el-select
+          :value="fieldsetState.sid"
+          filterable
+          placeholder="Please Select Shop"
+          class="shop-select"
+          @change="shopSelectCallback"
+        >
           <el-option v-for="item in shop_options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <!-- sku select -->
-      <el-form-item label="SKU">
+      <el-form-item label="SKU" class="sku-item">
         <el-select
           :value="fieldsetState.sku"
           filterable
           :placeholder="sku_select_loading ? 'loading ...' : 'Please Select Sku'"
+          class="sku-select"
           @change="skuSlectCallback"
         >
           <el-option v-for="item in sku_options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
+
+        <div v-if="product" class="product-info">
+          <div class="product-image">
+            <img :src="product.img" :alt="product.name" />
+          </div>
+          <div class="product-name">
+            <span>{{ product.name }}</span>
+          </div>
+        </div>
       </el-form-item>
       <!--  product stock location-->
-      <el-form-item label="Warehouse">
+      <el-form-item label="Warehouse" class="warehouse-item">
         <el-select
           :value="fieldsetState.location"
           filterable
           :placeholder="warehouse_select_loading ? 'loading ...' : 'Please Select Warehouse'"
+          class="warehouse-select"
           @change="(value) => fieldUpdate({ location: value })"
         >
           <el-option v-for="item in warehouse_options" :key="item.value" :label="item.label" :value="item.value">
@@ -162,16 +187,68 @@ export default {
   display: flex;
 }
 
+.el-form-item {
+  margin-right: 1rem;
+  flex-grow: 1;
+}
+
+.shop-item {
+  .shop-select {
+    width: 100%;
+  }
+}
+
+.sku-item {
+  flex-basis: 30%;
+
+  .sku-select {
+    width: 100%;
+  }
+}
+
+.product-info {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  height: 60px;
+
+  .product-image {
+    flex: 0 0 auto;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .product-name {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 60px;
+    line-height: 2;
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
+
+.warehouse-item {
+  .warehouse-select {
+    width: 100%;
+  }
+}
+
 .summary {
   display: block;
   clear: both;
   text-align: right;
   margin-right: 3rem;
-}
-
-.el-form-item {
-  margin-right: 1rem;
-  flex-grow: 1;
 }
 
 .remove-button {
